@@ -1,0 +1,5 @@
+.vscode/
+mosesdecoder/
+*.parquet
+train.en
+train.kn
