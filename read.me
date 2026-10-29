@@ -1,0 +1,114 @@
+cd "C:\Users\LENOVO\OneDrive\Documents\text-text translation"
+
+@'
+# M1 Moses English-to-Kannada Baseline
+
+## Objective
+
+M1 is the verified phrase-based Moses baseline for English-to-Kannada machine translation. It provides the reference scores for future comparison with M2 Transformer, M3 IndicBART, and M4 IndicTrans2.
+
+## Completed pipeline
+
+- Built Moses decoder and GIZA++ alignment tools.
+- Prepared a 10,000-sentence English-Kannada parallel corpus.
+- Cleaned line endings and normalized the corpus.
+- Tokenized English and Kannada training data.
+- Built the Kannada 5-gram language model.
+- Trained the phrase-based Moses model.
+- Generated phrase tables, lexical tables, alignments, and `moses.ini`.
+- Verified English-to-Kannada translation.
+- Evaluated FLORES dev, FLORES devtest, and IN22-Gen.
+- Verified that prediction and reference line counts match.
+- Calculated BLEU, chrF++, and spBLEU-1K.
+
+## Evaluation results
+
+| Dataset | Sentences | BLEU | chrF++ | spBLEU-1K |
+|---|---:|---:|---:|---:|
+| FLORES dev | 997 | 0.0 | 11.0 | 1.1 |
+| FLORES devtest | 1,012 | 0.1 | 10.9 | 0.9 |
+| IN22-Gen | 1,024 | 0.1 | 10.0 | 0.8 |
+
+## Important paths
+
+```text
+m1-data/
+  lm/
+    kn.arpa
+    kn.binary
+  tokenized/
+    train.tok.en
+    train.tok.kn
+
+results/m1/
+  M1_REPORT.md
+  config/moses.ini
+  config/run-info.txt
+  *.pred.kn
+  *.metrics.txt
+  *.spbleu.txt
+
+# Reproduce translation
+Run these commands from WSL Ubuntu:
+cd ~/project
+
+MODEL=~/m1-data/model/model/moses.ini
+MOSES=~/mosesdecoder/bin/moses
+TOKENIZER=~/mosesdecoder/scripts/tokenizer/tokenizer.perl
+DETOKENIZER=~/mosesdecoder/scripts/tokenizer/detokenizer.perl
+
+#Test one sentence:
+printf "He is a scientist.\n" |
+perl "$TOKENIZER" -l en |
+"$MOSES" -f "$MODEL" |
+perl "$DETOKENIZER" -l kn
+
+#Translate FLORES dev:
+perl "$TOKENIZER" -l en \
+  < data/raw/flores200_dataset/dev/eng_Latn.dev 2>/dev/null |
+"$MOSES" -f "$MODEL" \
+  2> results/m1/flores-dev.decode.log |
+perl "$DETOKENIZER" -l kn 2>/dev/null \
+  > results/m1/flores-dev.pred.kn
+
+#Verify counts:
+wc -l \
+  data/raw/flores200_dataset/dev/kan_Knda.dev \
+  results/m1/flores-dev.pred.kn \
+  data/raw/flores200_dataset/devtest/kan_Knda.devtest \
+  results/m1/flores-devtest.pred.kn \
+  data/raw/in22/in22gen.kan_Knda \
+  results/m1/in22gen.pred.kn
+
+#Calculate metrics:
+~/.local/bin/sacrebleu \
+  data/raw/flores200_dataset/dev/kan_Knda.dev \
+  -i results/m1/flores-dev.pred.kn \
+  -m bleu chrf --tokenize none
+
+~/.local/bin/sacrebleu \
+  data/raw/flores200_dataset/dev/kan_Knda.dev \
+  -i results/m1/flores-dev.pred.kn \
+  -m bleu --tokenize spBLEU-1K
+
+#Result location
+All M1 evaluation artifacts are stored in:
+
+#Text
+results/m1/
+The detailed report is:
+
+#Text
+results/m1/M1_REPORT.md
+Status
+M1 Moses baseline is complete and verified. The low scores reflect the small phrase-based training corpus and should be retained as the official M1 baseline. '@ | Set-Content -Encoding UTF8 M1_README.md
+
+#Code
+
+#Then verify:
+
+```powershell
+Get-Item M1_README.md
+git add M1_README.md
+git commit -m "Document M1 Moses baseline" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+git push origin main:master
