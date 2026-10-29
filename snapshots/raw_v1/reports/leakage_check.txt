@@ -1,0 +1,24 @@
+Exact benchmark leakage check
+
+Training files checked: 7
+Unique English sentences: 180289
+Unique Kannada sentences: 199644
+Unique sentence pairs: 199988
+
+FLORES dev:
+  Benchmark pairs: 997
+  Exact English-source matches: 0
+  Exact Kannada-target matches: 0
+  Exact parallel-pair matches: 0
+
+FLORES devtest:
+  Benchmark pairs: 1012
+  Exact English-source matches: 0
+  Exact Kannada-target matches: 0
+  Exact parallel-pair matches: 0
+
+IN22-Gen:
+  Benchmark pairs: 1024
+  Exact English-source matches: 0
+  Exact Kannada-target matches: 0
+  Exact parallel-pair matches: 0

@@ -1,0 +1,8 @@
+file,rows,non_nfc_english,non_nfc_kannada,english_under_4_words,english_over_100_words,extreme_ratio_below_0_2_or_above_5,duplicate_pairs,empty_english,empty_kannada
+train_en_kn_10k_seed_101.parquet,10000,0,579,90,0,7,0,0,0
+train_en_kn_10k_seed_2026.parquet,10000,0,568,86,0,11,0,0,0
+train_en_kn_10k_seed_42.parquet,10000,0,551,92,0,10,0,0,0
+train_en_kn_200k_seed_42.parquet,200000,0,11368,1926,0,187,0,0,0
+train_en_kn_50k_seed_101.parquet,50000,0,2862,475,0,49,0,0,0
+train_en_kn_50k_seed_2026.parquet,50000,0,2905,490,0,49,0,0,0
+train_en_kn_50k_seed_42.parquet,50000,0,2845,464,0,56,0,0,0

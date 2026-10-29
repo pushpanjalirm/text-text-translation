@@ -1,0 +1,6 @@
+date: 2026-10-29T22:11:16+00:00
+moses_decoder: /home/pushpanjalirm/mosesdecoder/bin/moses
+moses_config: /home/pushpanjalirm/project/results/m1/config/moses.ini
+sacrebleu: sacrebleu 2.6.0
+cpu: 8
+memory: 7.6Gi
